@@ -26,6 +26,25 @@ class DSP:
                               '2':np.array([1,-1]),
                             }
 
+    def add_awgn_noise(self,signal,target_snr,is_complex=True):
+        # We want to target a certain SNR for our BER plot
+        cur_power = np.mean(np.abs(signal)**2)
+        snr_linear = 10 ** (target_snr/10) #power equation for SNR
+        noise_power = cur_power/snr_linear #SNR formula solved for noise
+
+        rng = np.random.default_rng()
+    
+        if is_complex:
+            # Complex noise splits its total power equally between real and imag parts
+            std_dev = np.sqrt(noise_power / 2)
+            noise = rng.normal(0, std_dev, size=len(signal)) + 1j * rng.normal(0, std_dev, size=len(signal))
+        else:
+            # Real noise allocates all total power to the real channel
+            std_dev = np.sqrt(noise_power)
+            noise = rng.normal(0, std_dev, size=len(signal))
+            
+        # Combine element-by-element
+        return signal + noise
 
 """ 
 

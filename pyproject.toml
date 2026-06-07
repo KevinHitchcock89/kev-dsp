@@ -1,0 +1,10 @@
+[project]
+name = "python_model"
+version = "0.1.0"
+description = "BPSK DSP utilities"
+authors = [{name="Kevin Hitchcock"}]
+dependencies = []
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

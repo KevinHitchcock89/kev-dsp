@@ -220,6 +220,22 @@ class rx(DSP):
             bits.append(1 if np.real(symbol) > 0 else 0)
         return bits
 
+    def decodeMsg(self,msg):
+        #msg needs to be at baseband
+        bits = []
+        for nSp in range(0,len(msg),self.chips_per_symbol):
+            #integrate the chips
+            #If you use [start:end] you only get up to end so we want to add the last samples
+            chip = np.sum(msg[nSp:nSp+self.chips_per_symbol+1])
+            phase = np.rad2deg(np.angle(chips))
+            if -90 < phase < 90:
+                #If on right side of constellation
+                bits = np.append(bits,1)
+            else:
+                #If on left side of constellation
+                bits = np.append(bits,0)
+
+
 class BarkerWaveforms(DSP):
     def __init__(self,code_len,amplitude,chips_per_symbol,carrier_frequency,sample_rate):
         super().__init__(sample_rate,0)

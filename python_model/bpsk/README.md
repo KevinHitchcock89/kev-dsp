@@ -119,7 +119,7 @@ $$ f(k)= \frac{k*f_s}{N_{fft}} -->
     - Amplitude  
     - Detection threshold for Match filter
   - Create Barker Waveform
-    - Pick Code Lenght - Default 13-Bit Length Code
+    - Pick Code Length - Default 13-Bit Length Code
   - Create Params for Packets
     - Packet Size: Defualt to 64
     
